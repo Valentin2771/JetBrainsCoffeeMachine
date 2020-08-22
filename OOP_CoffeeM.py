@@ -49,11 +49,28 @@ class CoffeeMachine:
             else:
                 pass
             
+    # menu printing menu - telling users what options they have
+    
     def print_menu_remaining(self):
         print('Write action (buy, fill, take, remaining, exit):')
         
     def print_menu_buy(self):
         print('\nWhat do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:')
+        
+    def print_menu_fill(self):
+        
+        if CoffeeMachine.MODIFIED_INGREDIENTS == 0:
+            print('Write how many ml of water do you want to add:')
+        elif CoffeeMachine.MODIFIED_INGREDIENTS == 1:
+            print('Write how many ml of milk do you want to add:')
+        elif CoffeeMachine.MODIFIED_INGREDIENTS == 2:
+            print('Write how many grams of coffee beans do you want to add:')
+        elif CoffeeMachine.MODIFIED_INGREDIENTS == 3:
+            print('Write how many disposable cups of coffee do you want to add:')
+        else:
+            pass    
+    
+    # methods dealing with user's action
     
     def display_state(self):
         print("\nThe coffee machine has:")
@@ -91,41 +108,24 @@ class CoffeeMachine:
             elif not beans_status:
                 print("Sorry, not enough " + CoffeeMachine.machine_state[2][0] + "!\n")
             else:
-                print("Sorry, not enough " + CoffeeMachine.machine_state[2][0] + "!\n")    
-           
+                print("Sorry, not enough " + CoffeeMachine.machine_state[2][0] + "!\n")              
     
     def fill_action(self, user_input):
         user_input = int(user_input)
         if CoffeeMachine.MODIFIED_INGREDIENTS == 0:
             CoffeeMachine.machine_state[0][1] += user_input
-            CoffeeMachine.MODIFIED_INGREDIENTS += 1
             self.print_menu_fill()
         elif CoffeeMachine.MODIFIED_INGREDIENTS == 1:
             CoffeeMachine.machine_state[1][1] += user_input
-            CoffeeMachine.MODIFIED_INGREDIENTS += 1
             self.print_menu_fill()
         elif CoffeeMachine.MODIFIED_INGREDIENTS == 2:
             CoffeeMachine.machine_state[2][1] += user_input
-            CoffeeMachine.MODIFIED_INGREDIENTS += 1
             self.print_menu_fill()
         elif CoffeeMachine.MODIFIED_INGREDIENTS == 3:
-            CoffeeMachine.machine_state[3][1] += user_input
-            CoffeeMachine.MODIFIED_INGREDIENTS += 1
+            CoffeeMachine.machine_state[3][1] += user_input            
         else:
             pass
-      
-    def print_menu_fill(self):
-        
-        if CoffeeMachine.MODIFIED_INGREDIENTS == 0:
-            print('Write how many ml of water do you want to add:')
-        elif CoffeeMachine.MODIFIED_INGREDIENTS == 1:
-            print('Write how many ml of milk do you want to add:')
-        elif CoffeeMachine.MODIFIED_INGREDIENTS == 2:
-            print('Write how many grams of coffee beans do you want to add:')
-        elif CoffeeMachine.MODIFIED_INGREDIENTS == 3:
-            print('Write how many disposable cups of coffee do you want to add:')
-        else:
-            pass        
+        CoffeeMachine.MODIFIED_INGREDIENTS += 1            
     
     def take_action(self):
         money = CoffeeMachine.machine_state[4][1]
@@ -133,11 +133,8 @@ class CoffeeMachine:
         print('\n')
         CoffeeMachine.machine_state[4][1] = 0
         # return money      
-        
-            
 
 demo_machine = CoffeeMachine()
 
 while(True):
-    temp = input().strip()
-    demo_machine.controller(temp)
+    demo_machine.controller(input().strip())
